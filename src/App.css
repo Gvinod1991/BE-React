@@ -26,3 +26,10 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+.banner{
+  height: 300px;
+  margin-bottom: 0 !important;
+  border-bottom: 3px solid #f5820f;
+  padding: 0 !important;
+  background: rgba(0, 0, 0, 0) url('https://www.bookingjini.in/v3/api/public/uploads/banner.jpg') repeat scroll 0% 0%;
+}

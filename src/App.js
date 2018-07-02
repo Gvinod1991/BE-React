@@ -10,8 +10,10 @@ import IconButton from 'material-ui/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import Icon from 'material-ui/Icon';
-
-const styles = {
+import Grid from 'material-ui/Grid';
+import Paper from 'material-ui/Paper';
+import { Parallax, Background } from 'react-parallax';
+const styles = theme => ({
   root: {
     flexGrow: 1,
   },
@@ -25,8 +27,13 @@ const styles = {
   pullRight:
   {
     float: 'right',
-  }
-};
+  },
+  paper: {
+    padding: theme.spacing.unit * 2,
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+     },
+});
 class App extends React.Component  {
     state = {
       anchorEl: null,
@@ -43,7 +50,7 @@ class App extends React.Component  {
     const { classes } = this.props;
     const {anchorEl } = this.state;
     const open = Boolean(anchorEl);
-
+    const image2 = "https://www.bookingjini.in/v3/api/public/uploads/banner.jpg";
     return (
       <div className={classes.root}>
       <AppBar position="static" color="default">
@@ -84,6 +91,22 @@ class App extends React.Component  {
           </div>
         </Toolbar>
       </AppBar>
+      <Parallax bgImage={image2} strength={-100}>
+          <div style={{height: 300}}>
+          </div>
+      </Parallax>
+      <Grid container>
+        <Grid item xs={1} sm={1}>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>xs=12 sm=6</Paper>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Paper className={classes.paper}>xs=12 sm=6</Paper>
+        </Grid>
+        <Grid item xs={1} sm={1}>
+        </Grid>
+      </Grid>     
       </div>
     );
   }
