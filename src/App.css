@@ -26,13 +26,11 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
-.banner{
-  height: 300px;
-  margin-bottom: 0 !important;
-  border-bottom: 3px solid #f5820f;
-  padding: 0 !important;
-  background: rgba(0, 0, 0, 0) url('https://www.bookingjini.in/v3/api/public/uploads/banner.jpg') repeat scroll 0% 0%;
+.container-custom{
+  margin:0px!important;
+  padding:0px!important;
 }
+
 .navbar .navbar-nav .nav-item{
    padding:10px;
 }
@@ -43,4 +41,44 @@
 {
   padding-top:0px;
   padding-bottom:0px;
+}
+.banner{
+  height: 350px;
+  margin-bottom: 0 !important;
+  border-bottom: 3px solid #d1d1d1;
+  padding: 0 !important;
+  background: rgba(0, 0, 0, 0) url('https://a0.muscache.com/im/pictures/812e040f-6f6f-4cae-ad67-66c050b57c1f.jpg?aki_policy=xx_large') repeat scroll 0% 0%;
+}
+.banner-button
+{
+  margin-top:300px;
+  margin-left:30px;
+}
+.book-room{
+  padding:10px!important;
+}
+.room
+{
+  padding:10px!important;
+}
+.room-properties
+{
+  width:100%;
+  padding:5px;
+}
+.room-capcity{
+  padding:5px;
+}
+.category
+{
+  padding-left:10px;
+  padding-right:10px;
+}
+.room-price{
+  padding:5px;
+  font-weight: 400!important;
+  font-size:16px!important;
+}
+.price-tag {
+  
 }
