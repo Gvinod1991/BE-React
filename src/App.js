@@ -1,4 +1,5 @@
 import React from 'react';
+import DateRangePicker from 'react-daterange-picker';
 import GoogleMapReact from 'google-map-react';
 import logo from './logo.svg';
 import './App.css';
@@ -22,9 +23,14 @@ class App extends React.Component  {
     center: { lat: 40.7446790, lng: -73.9485420 },
     zoom: 11
   }
+  state = {
+    date: [new Date(), new Date()],
+  }
+  onChange = date => this.setState({ date })
   constructor(props) {
     super(props);
-
+    
+    
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false
@@ -141,7 +147,10 @@ class App extends React.Component  {
         <Card>
           <CardBody>
             <CardTitle>Calendar</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
+            <DateRangePicker dateFormat="DD/MM/YYYY"
+          onChange={this.onChange}
+          value={this.state.date}
+        />
             <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
             <Button>Button</Button>
           </CardBody>

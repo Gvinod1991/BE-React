@@ -6,6 +6,7 @@
     "bootstrap": "^4.1.1",
     "google-map-react": "^1.0.5",
     "react": "^16.3.2",
+    "react-daterange-picker": "github:wojtekmaj/react-daterange-picker",
     "react-dom": "^16.3.2",
     "react-parallax": "^1.7.0",
     "react-scripts": "1.1.4",
