@@ -16,7 +16,7 @@ import {Container,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,Card, CardText, CardBody,
-  CardTitle, CardSubtitle, Button  } from 'reactstrap';
+  CardTitle, Button  } from 'reactstrap';
   const MapStaticComponent = ({ text }) => <div>{ text }</div>;
 class App extends React.Component  {
   static defaultProps = {
@@ -50,21 +50,10 @@ class App extends React.Component  {
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              <NavItem>
-                <NavLink href="/">Home</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/about/">About</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/policies">Policies</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/map">Map</NavLink>
-              </NavItem>
+              
               <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>
-                  <i className="fa fa-hotel fa-2x"></i>
+                <DropdownToggle nav>
+                  <i className="fa fa-hotel hotel-icon"></i>
                 </DropdownToggle>
                 <DropdownMenu right>
                   <DropdownItem>
@@ -208,7 +197,7 @@ class App extends React.Component  {
                 <CardTitle>About Booking Engine</CardTitle>
                 <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
               </CardBody>
-            </Card>
+          </Card>
           </div>
       <div className="col-md-1"></div>
       </div>
