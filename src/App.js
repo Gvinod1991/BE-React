@@ -62,10 +62,6 @@ class App extends React.Component  {
                   <DropdownItem>
                     Hotel 2
                   </DropdownItem>
-                  <DropdownItem divider />
-                  <DropdownItem>
-                    Reset
-                  </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
