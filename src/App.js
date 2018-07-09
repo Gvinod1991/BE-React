@@ -10,13 +10,12 @@ import {Container,
   NavbarToggler,
   NavbarBrand,
   Nav,
-  NavItem,
-  NavLink,
   UncontrolledDropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,Card, CardText, CardBody,
   CardTitle, Button  } from 'reactstrap';
+  import axios from 'axios';
   const MapStaticComponent = ({ text }) => <div>{ text }</div>;
 class App extends React.Component  {
   static defaultProps = {
@@ -26,15 +25,39 @@ class App extends React.Component  {
   state = {
     date: [new Date(), new Date()],
   }
+  
   onChange = date => this.setState({ date })
   constructor(props) {
     super(props);
-    
-    
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false
     };
+    this.getAccess(this);
+     }
+  getAccess(self)
+  {
+    axios.get(
+      'http://api.bookingjini.com/bookingEngine/auth/192.168.43.156:3000'
+      ).then(function(resp){
+        self.getHotels(resp.data.data.company_id,resp.data.data.comp_hash);
+      }).catch(function(err){
+        console.log("error");
+      }).then(function(){
+
+      });
+  }
+  getHotels(company_id,comp_hash)
+  {
+    axios.get(
+      'http://api.bookingjini.com/hotel_admin/hotels_by_company/'+comp_hash+'/'+company_id
+      ).then(function(resp){
+      console.log(resp);
+      }).catch(function(err){
+        console.log(err);
+      }).then(function(){
+
+      });
   }
   toggle() {
     this.setState({
@@ -128,7 +151,7 @@ class App extends React.Component  {
         </Card>
         
         </div>
-        <div class="col-md-4">
+        <div className="col-md-4">
         <Card>
           <CardBody>
             <CardTitle>Calendar</CardTitle>
