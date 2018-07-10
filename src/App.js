@@ -25,7 +25,7 @@ class App extends React.Component  {
   state = {
     date: [new Date(), new Date()],
   }
-  
+  hotels=[];
   onChange = date => this.setState({ date })
   constructor(props) {
     super(props);
@@ -40,24 +40,28 @@ class App extends React.Component  {
     axios.get(
       'http://api.bookingjini.com/bookingEngine/auth/192.168.43.156:3000'
       ).then(function(resp){
-        self.getHotels(resp.data.data.company_id,resp.data.data.comp_hash);
+        self.getHotels(resp.data.data.company_id,resp.data.data.comp_hash,self);
       }).catch(function(err){
         console.log("error");
       }).then(function(){
 
       });
   }
-  getHotels(company_id,comp_hash)
+  getHotels(company_id,comp_hash,self)
   {
     axios.get(
       'http://api.bookingjini.com/hotel_admin/hotels_by_company/'+comp_hash+'/'+company_id
       ).then(function(resp){
-      console.log(resp);
+      //console.log(resp);
+      self.hotels = resp.data.data.map((hotel) =>
+      <li>{hotel.hotel_name}</li>
+        );
+        console.log(self.hotels);
       }).catch(function(err){
         console.log(err);
       }).then(function(){
-
-      });
+    
+    });
   }
   toggle() {
     this.setState({
@@ -78,18 +82,13 @@ class App extends React.Component  {
                 <DropdownToggle nav>
                   <i className="fa fa-hotel hotel-icon"></i>
                 </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem>
-                    Hotel 1
-                  </DropdownItem>
-                  <DropdownItem>
-                    Hotel 2
-                  </DropdownItem>
-                </DropdownMenu>
+                  <DropdownMenu right>
+                    {this.hotels}
+                  </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
           </Collapse>
-        </Navbar>
+        </Navbar> 
       </div>
       <div className="row banner">
         <button className="btn btn-info banner-button">View Photos</button>
