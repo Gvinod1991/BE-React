@@ -31,7 +31,8 @@ class App extends React.Component  {
     super(props);
     this.toggle = this.toggle.bind(this);
     this.state = {
-      isOpen: false
+      isOpen: false,
+      hotels:[]
     };
     this.getAccess(this);
      }
@@ -53,9 +54,8 @@ class App extends React.Component  {
       'http://api.bookingjini.com/hotel_admin/hotels_by_company/'+comp_hash+'/'+company_id
       ).then(function(resp){
       //console.log(resp);
-      self.hotels = resp.data.data.map((hotel) =>
-      <li>{hotel.hotel_name}</li>
-        );
+      const hotels = resp.data.data;
+        self.setState({ hotels });
         console.log(self.hotels);
       }).catch(function(err){
         console.log(err);
@@ -83,7 +83,10 @@ class App extends React.Component  {
                   <i className="fa fa-hotel hotel-icon"></i>
                 </DropdownToggle>
                   <DropdownMenu right>
-                    {this.hotels}
+                    {
+                    this.state.hotels.map(hotel =>
+                    <DropdownItem ><a href="/hotel/{hotel.hotel_id}">{hotel.hotel_name}</a></DropdownItem>
+                    )}
                   </DropdownMenu>
               </UncontrolledDropdown>
             </Nav>
