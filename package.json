@@ -6,9 +6,11 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
     "google-map-react": "^1.0.5",
-    "react": "^16.3.2",
+    "moment": "^2.22.2",
+    "react": "^16.4.1",
     "react-daterange-picker": "github:wojtekmaj/react-daterange-picker",
-    "react-dom": "^16.3.2",
+    "react-dates": "^17.1.0",
+    "react-dom": "^16.4.1",
     "react-parallax": "^1.7.0",
     "react-scripts": "1.1.4",
     "reactstrap": "^6.2.0"

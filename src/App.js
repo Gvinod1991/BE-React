@@ -4,6 +4,8 @@ import GoogleMapReact from 'google-map-react';
 import logo from './logo.svg';
 import './App.css';
 import PropTypes from 'prop-types';
+import 'react-dates/initialize';
+//import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import {Container,
   Collapse,
   Navbar,
