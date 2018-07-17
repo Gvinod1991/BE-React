@@ -1,23 +1,14 @@
 import React from 'react';
 import DateRangePicker from 'react-daterange-picker';
 import GoogleMapReact from 'google-map-react';
-import logo from './logo.svg';
-import './App.css';
+import Header from './common/Header';
+import Footer from './common/Footer';
 import PropTypes from 'prop-types';
 import 'react-dates/initialize';
 //import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
-import {Container,
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  NavbarBrand,
-  Nav,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,Card, CardText, CardBody,
+import {Container,Card, CardText, CardBody,
   CardTitle, Button  } from 'reactstrap';
-  import axios from 'axios';
+  //import axios from 'axios';
   const MapStaticComponent = ({ text }) => <div>{ text }</div>;
 class App extends React.Component  {
   static defaultProps = {
@@ -27,74 +18,17 @@ class App extends React.Component  {
   state = {
     date: [new Date(), new Date()],
   }
-  hotels=[];
   onChange = date => this.setState({ date })
   constructor(props) {
     super(props);
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false,
-      hotels:[]
-    };
-    this.getAccess(this);
+      this.state = {
+      };
      }
-  getAccess(self)
-  {
-    axios.get(
-      'http://api.bookingjini.com/bookingEngine/auth/192.168.43.156:3000'
-      ).then(function(resp){
-        self.getHotels(resp.data.data.company_id,resp.data.data.comp_hash,self);
-      }).catch(function(err){
-        console.log("error");
-      }).then(function(){
-
-      });
-  }
-  getHotels(company_id,comp_hash,self)
-  {
-    axios.get(
-      'http://api.bookingjini.com/hotel_admin/hotels_by_company/'+comp_hash+'/'+company_id
-      ).then(function(resp){
-      //console.log(resp);
-      const hotels = resp.data.data;
-        self.setState({ hotels });
-        console.log(self.hotels);
-      }).catch(function(err){
-        console.log(err);
-      }).then(function(){
-    
-    });
-  }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  }
+ 
   render() {
     return (
     <Container fluid className="">
-      <div className="header">
-      <Navbar color="light" light expand="md">
-          <NavbarBrand href="/"> <img src={logo} className="App-logo" alt="logo" /></NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={this.state.isOpen} navbar>
-            <Nav className="ml-auto" navbar>
-              
-              <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav>
-                  <i className="fa fa-hotel hotel-icon"></i>
-                </DropdownToggle>
-                  <DropdownMenu right>
-                    {
-                    this.state.hotels.map(hotel =>
-                    <DropdownItem ><a href="/hotel/{hotel.hotel_id}">{hotel.hotel_name}</a></DropdownItem>
-                    )}
-                  </DropdownMenu>
-              </UncontrolledDropdown>
-            </Nav>
-          </Collapse>
-        </Navbar> 
-      </div>
+     <Header></Header>
       <div className="row banner">
         <button className="btn btn-info banner-button">View Photos</button>
       </div>
@@ -203,8 +137,6 @@ class App extends React.Component  {
             </div>
             <div className="clearfix"></div>
             <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            
-            
            </CardBody>
         </Card>
         <div className="col-md-1"></div>
@@ -260,6 +192,7 @@ class App extends React.Component  {
           </div>
       <div className="col-md-1"></div>
       </div>
+      <Footer></Footer>
     </Container>
     );
   }
