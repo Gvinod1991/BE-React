@@ -1,13 +1,17 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import DateRangePicker from 'react-daterange-picker';
 import GoogleMapReact from 'google-map-react';
 import Header from './common/Header';
 import Footer from './common/Footer';
 import PropTypes from 'prop-types';
 import 'react-dates/initialize';
+import banner from './banner.jpg';
+import { Carousel } from 'react-responsive-carousel';
+import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 //import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import {Container,Card, CardText, CardBody,
-  CardTitle, Button  } from 'reactstrap';
+  CardTitle, Button ,Modal, ModalHeader, ModalBody,ModalFooter  } from 'reactstrap';
   //import axios from 'axios';
   const MapStaticComponent = ({ text }) => <div>{ text }</div>;
 class App extends React.Component  {
@@ -21,16 +25,46 @@ class App extends React.Component  {
   onChange = date => this.setState({ date })
   constructor(props) {
     super(props);
-      this.state = {
-      };
+    this.state = {
+      modal: false,
+      backdrop: true
+    };
+
+    this.toggle = this.toggle.bind(this);
      }
+     toggle() {
+      this.setState({
+        modal: !this.state.modal
+      });
+    }
  
   render() {
     return (
     <Container fluid className="">
      <Header></Header>
+     <div>
+     <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle} backdrop={this.state.backdrop} className={this.props.className}>
+          <ModalHeader toggle={this.toggle}></ModalHeader>
+          <ModalBody>
+              <Carousel axis="vertical"  showIndicators={false} emulateTouch showThumbs={false}>
+                    <div>
+                        <img src={banner} />
+                        
+                    </div>
+                    <div>
+                        <img src={banner} />
+                        
+                    </div>
+                    <div>
+                        <img src={banner} />
+                        
+                    </div>
+            </Carousel>
+          </ModalBody>
+        </Modal>
+      </div>
       <div className="row banner">
-        <button className="btn btn-info banner-button">View Photos</button>
+        <button onClick={this.toggle} className="btn btn-info banner-button">View Photos</button>
       </div>
       <div className="row book-room">
         <div className="col-md-1">
@@ -97,8 +131,7 @@ class App extends React.Component  {
           onChange={this.onChange}
           value={this.state.date}
         />
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <Button>Button</Button>
+            
           </CardBody>
          </Card>
         </div>
