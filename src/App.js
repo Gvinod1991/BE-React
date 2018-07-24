@@ -9,6 +9,7 @@ import 'react-dates/initialize';
 import banner from './banner.jpg';
 import { Carousel } from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
+import axios from 'axios';
 //import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import {Container,Card, CardText, CardBody,
   CardTitle, Button ,Modal, ModalHeader, ModalBody,ModalFooter  } from 'reactstrap';
@@ -29,7 +30,7 @@ class App extends React.Component  {
       modal: false,
       backdrop: true
     };
-
+    //http://ibe.bookingjini.com/v3/api/bookingEngine/get-inventory/a08be95654405636e137f67ef7a8e6e3/40/2018-07-23/2018-07-24
     this.toggle = this.toggle.bind(this);
      }
      toggle() {
@@ -37,11 +38,29 @@ class App extends React.Component  {
         modal: !this.state.modal
       });
     }
- 
+    myCallback = (dataFromChild) => {
+      console.log(dataFromChild);
+      this.getInventory(dataFromChild.hotel_id,dataFromChild.api_key,this);
+    }
+    getInventory(hotel_id,api_key,self)
+    {
+      axios.get(
+        'http://api.bookingjini.com/bookingEngine/get-inventory/'+api_key+'/'+hotel_id+'/2018-07-24/2018-07-25'
+        ).then(function(resp){
+        const inv_data = resp.data.data;
+         console.log(inv_data);
+          //self.state.logo=;
+        }).catch(function(err){
+          console.log(err);
+        }).then(function(){
+      
+      });
+    }
   render() {
+    const head="Data to header";
     return (
     <Container fluid className="">
-     <Header></Header>
+     <Header dataFromParent={head} callBackFromParent={this.myCallback}></Header>
      <div>
      <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle} backdrop={this.state.backdrop} className={this.props.className}>
           <ModalHeader toggle={this.toggle}></ModalHeader>

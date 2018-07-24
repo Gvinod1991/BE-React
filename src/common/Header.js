@@ -18,6 +18,7 @@ import {Container,
     logo_url="http://api.bookingjini.com/public";
     constructor(props) {
         super(props);
+        console.log(props.dataFromParent);
         this.toggle = this.toggle.bind(this);
         this.state = {
         isOpen: false,
@@ -26,20 +27,23 @@ import {Container,
         logo:""
         };
         this.getAccess(this);
+        
         }
         getAccess(self)
         {
           axios.get(
             'http://api.bookingjini.com/bookingEngine/auth/192.168.43.156:3000'
             ).then(function(resp){
-              self.getHotels(resp.data.data.company_id,resp.data.data.comp_hash,self);
+              
+              self.getHotels(resp.data.data.api_key,resp.data.data.company_id,resp.data.data.comp_hash,self);
+              
             }).catch(function(err){
               console.log("error");
             }).then(function(){
       
             });
         }
-        getHotels(company_id,comp_hash,self)
+        getHotels(api_key,company_id,comp_hash,self)
         {
             
           axios.get(
@@ -48,7 +52,9 @@ import {Container,
             const hotels = resp.data.data;
               self.setState({ hotels });
               self.setState({ hotel_name:hotels[0].hotel_name });
-              self.setState({logo:self.logo_url+hotels[0].exterior_image})
+              self.setState({logo:self.logo_url+hotels[0].exterior_image});
+              const needData={"hotel_id":hotels[0].hotel_id,"api_key":api_key};
+              self.someFoo(needData);
               //self.state.logo=;
             }).catch(function(err){
               console.log(err);
@@ -61,7 +67,10 @@ import {Container,
             isOpen: !this.state.isOpen
           });
         }
-
+        someFoo=(DataToParent)=>{
+        console.log(DataToParent);
+            this.props.callBackFromParent(DataToParent);
+        }
     render(){
         return(
             <Container fluid className="">
@@ -71,17 +80,16 @@ import {Container,
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
                   <Nav className="ml-auto" navbar>
-                    
                     <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle nav>
                         <i className="fa fa-hotel hotel-icon"></i>
                       </DropdownToggle>
-                        <DropdownMenu right>
+                      <DropdownMenu right>
                           {
                           this.state.hotels.map(hotel =>
                           <DropdownItem ><a href="/hotel/{hotel.hotel_id}">{hotel.hotel_name}</a></DropdownItem>
                           )}
-                        </DropdownMenu>
+                      </DropdownMenu>
                     </UncontrolledDropdown>
                   </Nav>
                 </Collapse>
