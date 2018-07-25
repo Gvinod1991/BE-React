@@ -4,6 +4,7 @@ import DateRangePicker from 'react-daterange-picker';
 import GoogleMapReact from 'google-map-react';
 import Header from './common/Header';
 import Footer from './common/Footer';
+import Rooms from './Rooms';
 import PropTypes from 'prop-types';
 import 'react-dates/initialize';
 import banner from './banner.jpg';
@@ -30,7 +31,6 @@ class App extends React.Component  {
       modal: false,
       backdrop: true
     };
-    //http://ibe.bookingjini.com/v3/api/bookingEngine/get-inventory/a08be95654405636e137f67ef7a8e6e3/40/2018-07-23/2018-07-24
     this.toggle = this.toggle.bind(this);
      }
      toggle() {
@@ -39,28 +39,17 @@ class App extends React.Component  {
       });
     }
     myCallback = (dataFromChild) => {
+      this.setState({ hotel_id:dataFromChild.hotel_id, api_key:dataFromChild.api_key});
       console.log(dataFromChild);
-      this.getInventory(dataFromChild.hotel_id,dataFromChild.api_key,this);
+
+      //this.getInventory(dataFromChild.hotel_id,dataFromChild.api_key,this);
     }
-    getInventory(hotel_id,api_key,self)
-    {
-      axios.get(
-        'http://api.bookingjini.com/bookingEngine/get-inventory/'+api_key+'/'+hotel_id+'/2018-07-24/2018-07-25'
-        ).then(function(resp){
-        const inv_data = resp.data.data;
-         console.log(inv_data);
-          //self.state.logo=;
-        }).catch(function(err){
-          console.log(err);
-        }).then(function(){
-      
-      });
-    }
+    
   render() {
     const head="Data to header";
     return (
     <Container fluid className="">
-     <Header dataFromParent={head} callBackFromParent={this.myCallback}></Header>
+     <Header hotel_id={this.state.hotel_id} api_key={this.state.api_key} dataFromParent={head} callBackFromParent={this.myCallback}></Header>
      <div>
      <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle} backdrop={this.state.backdrop} className={this.props.className}>
           <ModalHeader toggle={this.toggle}></ModalHeader>
@@ -89,59 +78,11 @@ class App extends React.Component  {
         <div className="col-md-1">
         </div>
         <div className="col-md-6">
-        <Card className="room">
-          <CardBody>
-            <CardTitle><div className="row"><p className="col-md-9">Deluxe Room with lake view</p>
-            <button className="col-md-3 btn btn-info">Room Photo</button></div></CardTitle>
-            <div className="row room-properties">
-              <div className="col-md-6 room-capacity">
-              <span className="category fa fa-male fa-2x"></span> 3 
-              <span className="category fa fa-child fa-2x"></span> 2
-              <span className="category fa fa-bed fa-2x"></span> 2
-              </div>
-              <div className="col-md-6 room-price">
-              <span className="fa fa-inr price-tag"> 2500 Per Room Night</span>
-              </div>
-            </div>
-            <div className="clearfix"></div>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
-            <div className="row ">
-              <div className="col-md-4">
-                ACCOMMODATION TYPE
-              </div>
-              <div className="col-md-4 ">
-                Room
-              </div>
-              <div className="col-md-4 ">
-               Amount
-              </div>
-            </div>
-            <div className="row ">
-              <div className="col-md-4">
-               Room Only
-              </div>
-              <div className="col-md-4 ">
-                2
-              </div>
-              <div className="col-md-4 ">
-               2400
-              </div>
-            </div>
-            <div className="row ">
-              <div className="col-md-4">
-               Room with breakfast 
-              </div>
-              <div className="col-md-4 ">
-                2
-              </div>
-              <div className="col-md-4 ">
-               2400
-              </div>
-            </div>
-          </CardBody>
-        </Card>
-        
-        </div>
+    <Rooms hotel_id={this.state.hotel_id} api_key={this.state.api_key} ></Rooms>
+
+      
+          
+      </div>
         <div className="col-md-4">
         <Card>
           <CardBody>
@@ -150,7 +91,6 @@ class App extends React.Component  {
           onChange={this.onChange}
           value={this.state.date}
         />
-            
           </CardBody>
          </Card>
         </div>

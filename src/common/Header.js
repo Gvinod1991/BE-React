@@ -27,7 +27,7 @@ import {Container,
         logo:""
         };
         this.getAccess(this);
-        
+        console.log(props);
         }
         getAccess(self)
         {
@@ -54,7 +54,7 @@ import {Container,
               self.setState({ hotel_name:hotels[0].hotel_name });
               self.setState({logo:self.logo_url+hotels[0].exterior_image});
               const needData={"hotel_id":hotels[0].hotel_id,"api_key":api_key};
-              self.someFoo(needData);
+              self.sendDataToParent(needData);
               //self.state.logo=;
             }).catch(function(err){
               console.log(err);
@@ -67,8 +67,7 @@ import {Container,
             isOpen: !this.state.isOpen
           });
         }
-        someFoo=(DataToParent)=>{
-        console.log(DataToParent);
+        sendDataToParent=(DataToParent)=>{
             this.props.callBackFromParent(DataToParent);
         }
     render(){
