@@ -31,24 +31,25 @@ import {Container,Card, CardText, CardBody,
     render(){
         return(
             <div>{
-                this.state.rooms.map(room =>
-           
+                this.state.rooms.map((room,
+                  ROOM) => {
+                return(
         <Card className="room">
           <CardBody>
-            <CardTitle><div className="row"><p className="col-md-9">Deluxe Room with lake view</p>
+            <CardTitle><div className="row"><p className="col-md-9">{room.room_type}</p>
             <button className="col-md-3 btn btn-info">Room Photo</button></div></CardTitle>
             <div className="row room-properties">
               <div className="col-md-6 room-capacity">
-              <span className="category fa fa-male fa-2x"></span> 3 
-              <span className="category fa fa-child fa-2x"></span> 2
-              <span className="category fa fa-bed fa-2x"></span> 2
+              <span className="category fa fa-male fa-2x"></span> {room.max_people}
+              <span className="category fa fa-child fa-2x"></span> {room.max_child}
+              <span className="category fa fa-bed fa-2x"></span> {room.extra_person}
               </div>
               <div className="col-md-6 room-price">
-              <span className="fa fa-inr price-tag"> 2500 Per Room Night</span>
+              <span className="fa fa-inr price-tag"  > {room.min_room_price} Per Room Night</span>
               </div>
             </div>
             <div className="clearfix"></div>
-            <CardText>Some quick example text to build on the card title and make up the bulk of the card's content.</CardText>
+            <CardText><div dangerouslySetInnerHTML={{__html: room.description}}></div></CardText>
             <div className="row ">
               <div className="col-md-4">
                 ACCOMMODATION TYPE
@@ -60,32 +61,28 @@ import {Container,Card, CardText, CardBody,
                Amount
               </div>
             </div>
-            <div className="row ">
-              <div className="col-md-4">
-               Room Only
+            { room.rate_plans ? room.rate_plans.map((rate_plan) => {
+              return (
+                <div className="row ">
+                <div className="col-md-4">
+                 {rate_plan.plan_name}
+                </div>
+                <div className="col-md-4 ">
+                  2
+                </div>
+                <div className="col-md-4 ">
+                {rate_plan.bar_price}
+                </div>
               </div>
-              <div className="col-md-4 ">
-                2
-              </div>
-              <div className="col-md-4 ">
-               2400
-              </div>
-            </div>
-            <div className="row ">
-              <div className="col-md-4">
-               Room with breakfast 
-              </div>
-              <div className="col-md-4 ">
-                2
-              </div>
-              <div className="col-md-4 ">
-               2400
-              </div>
-            </div>
+              );
+            })
+            :  <div>'Not Available'</div>}
           </CardBody>
         </Card>
-       )}
+       ) }
+                )}
       </div>
+   
         );
     }
     }

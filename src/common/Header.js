@@ -18,7 +18,6 @@ import {Container,
     logo_url="http://api.bookingjini.com/public";
     constructor(props) {
         super(props);
-        console.log(props.dataFromParent);
         this.toggle = this.toggle.bind(this);
         this.state = {
         isOpen: false,
@@ -27,7 +26,6 @@ import {Container,
         logo:""
         };
         this.getAccess(this);
-        console.log(props);
         }
         getAccess(self)
         {

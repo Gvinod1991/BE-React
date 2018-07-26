@@ -40,11 +40,7 @@ class App extends React.Component  {
     }
     myCallback = (dataFromChild) => {
       this.setState({ hotel_id:dataFromChild.hotel_id, api_key:dataFromChild.api_key});
-      console.log(dataFromChild);
-
-      //this.getInventory(dataFromChild.hotel_id,dataFromChild.api_key,this);
     }
-    
   render() {
     const head="Data to header";
     return (
@@ -78,19 +74,17 @@ class App extends React.Component  {
         <div className="col-md-1">
         </div>
         <div className="col-md-6">
-    <Rooms hotel_id={this.state.hotel_id} api_key={this.state.api_key} ></Rooms>
-
-      
-          
-      </div>
+        { this.state && this.state.hotel_id &&
+          <Rooms hotel_id={this.state.hotel_id} api_key={this.state.api_key} ></Rooms>   
+        }       
+        </div>
         <div className="col-md-4">
         <Card>
           <CardBody>
             <CardTitle>Calendar</CardTitle>
             <DateRangePicker dateFormat="DD/MM/YYYY"
-          onChange={this.onChange}
-          value={this.state.date}
-        />
+                  onChange={this.onChange}
+                  value={this.state.date} />
           </CardBody>
          </Card>
         </div>
