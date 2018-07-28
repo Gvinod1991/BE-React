@@ -23,29 +23,28 @@ import {Container,
         isOpen: false,
         hotels:[],
         hotel_name:"",
-        logo:""
+        //logo:""
         };
+        this.url=window.location.href;
+        const protocol=window.location.protocol;
+        this.url=this.url.slice(protocol.length+2,this.url.length-1);//Get only exact URL Without protocol
         this.getAccess(this);
         }
         getAccess(self)
         {
           axios.get(
-            'http://api.bookingjini.com/bookingEngine/auth/192.168.43.156:3000'
+            self.props.config.api_url+'bookingEngine/auth/'+self.url
             ).then(function(resp){
-              
               self.getHotels(resp.data.data.api_key,resp.data.data.company_id,resp.data.data.comp_hash,self);
-              
             }).catch(function(err){
               console.log("error");
             }).then(function(){
-      
             });
         }
         getHotels(api_key,company_id,comp_hash,self)
         {
-            
           axios.get(
-            'http://api.bookingjini.com/hotel_admin/hotels_by_company/'+comp_hash+'/'+company_id
+            self.props.config.api_url+'/hotel_admin/hotels_by_company/'+comp_hash+'/'+company_id
             ).then(function(resp){
             const hotels = resp.data.data;
               self.setState({ hotels });
@@ -53,11 +52,9 @@ import {Container,
               self.setState({logo:self.logo_url+hotels[0].exterior_image});
               const needData={"hotel_id":hotels[0].hotel_id,"api_key":api_key};
               self.sendDataToParent(needData);
-              //self.state.logo=;
             }).catch(function(err){
               console.log(err);
             }).then(function(){
-          
           });
         }
         toggle() {
@@ -83,8 +80,8 @@ import {Container,
                       </DropdownToggle>
                       <DropdownMenu right>
                           {
-                          this.state.hotels.map(hotel =>
-                          <DropdownItem ><a href="/hotel/{hotel.hotel_id}">{hotel.hotel_name}</a></DropdownItem>
+                          this.state.hotels.map((hotel,index) =>
+                          <DropdownItem key={'drop'+ index}  ><a href="/hotel/{hotel.hotel_id}">{hotel.hotel_name}</a></DropdownItem>
                           )}
                       </DropdownMenu>
                     </UncontrolledDropdown>

@@ -1,20 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+//import ReactDOM from 'react-dom';
 import DateRangePicker from 'react-daterange-picker';
 import GoogleMapReact from 'google-map-react';
 import Header from './common/Header';
 import Footer from './common/Footer';
+import { JwModal } from './common/JwModal.js';
 import Rooms from './Rooms';
-import PropTypes from 'prop-types';
+
+//import PropTypes from 'prop-types';
 import 'react-dates/initialize';
 import banner from './banner.jpg';
 import { Carousel } from 'react-responsive-carousel';
 import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
-import axios from 'axios';
+//import axios from 'axios';
+import Config from './common/Config';
 //import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import {Container,Card, CardText, CardBody,
-  CardTitle, Button ,Modal, ModalHeader, ModalBody,ModalFooter  } from 'reactstrap';
-  //import axios from 'axios';
+  CardTitle, Button ,Modal, ModalHeader, ModalBody  } from 'reactstrap';
   const MapStaticComponent = ({ text }) => <div>{ text }</div>;
 class App extends React.Component  {
   static defaultProps = {
@@ -37,35 +39,52 @@ class App extends React.Component  {
       this.setState({
         modal: !this.state.modal
       });
+      
     }
     myCallback = (dataFromChild) => {
       this.setState({ hotel_id:dataFromChild.hotel_id, api_key:dataFromChild.api_key});
     }
   render() {
-    const head="Data to header";
     return (
     <Container fluid className="">
-     <Header hotel_id={this.state.hotel_id} api_key={this.state.api_key} dataFromParent={head} callBackFromParent={this.myCallback}></Header>
+     <Header config={Config}  callBackFromParent={this.myCallback}></Header>
      <div>
      <Modal size="lg" isOpen={this.state.modal} toggle={this.toggle} backdrop={this.state.backdrop} className={this.props.className}>
           <ModalHeader toggle={this.toggle}></ModalHeader>
           <ModalBody>
               <Carousel axis="vertical"  showIndicators={false} emulateTouch showThumbs={false}>
                     <div>
-                        <img src={banner} />
+                        <img src={banner} alt="banner"/>
                         
                     </div>
                     <div>
-                        <img src={banner} />
+                        <img src={banner} alt="banner" />
                         
                     </div>
                     <div>
-                        <img src={banner} />
+                        <img src={banner} alt="banner" />
                         
                     </div>
             </Carousel>
           </ModalBody>
         </Modal>
+        <JwModal id="custom-modal-1">
+        <div id="modal-1" class="md-modal md-effect-1 md-show">
+            <div class="md-content">
+              <h3>Modal Dialog</h3>
+              <div>
+                <p>This is a modal window. You can do the following things with it:</p>
+                <ul>
+                  <li><strong>Read:</strong> modal windows will probably tell you something important so don't forget to read what they say.</li>
+                  <li><strong>Look:</strong> a modal window enjoys a certain kind of attention; just look at it and appreciate its presence.</li>
+                  <li><strong>Close:</strong> click on the button below to close the modal.</li>
+                </ul>
+                <button class="md-close">Close me!</button>
+              </div>
+            </div>
+          </div>          
+          <button onClick={JwModal.close('custom-modal-1')}>Close</button>
+        </JwModal>
       </div>
       <div className="row banner">
         <button onClick={this.toggle} className="btn btn-info banner-button">View Photos</button>
@@ -75,7 +94,7 @@ class App extends React.Component  {
         </div>
         <div className="col-md-6">
         { this.state && this.state.hotel_id &&
-          <Rooms hotel_id={this.state.hotel_id} api_key={this.state.api_key} ></Rooms>   
+          <Rooms config={Config} hotel_id={this.state.hotel_id} api_key={this.state.api_key} ></Rooms>   
         }       
         </div>
         <div className="col-md-4">
@@ -184,7 +203,7 @@ class App extends React.Component  {
   }
 
 }
-App.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+/*App.propTypes = {
+  //classes: PropTypes.object.isRequired,
+};*/
 export default App;

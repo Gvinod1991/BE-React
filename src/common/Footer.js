@@ -1,10 +1,8 @@
 import React from 'react';
-import logo from '../logo.svg';
+//import logo from '../logo.svg';
 import '../App.css';
 //import PropTypes from 'prop-types';
-import {Container,
-    Navbar,
-    Nav  } from 'reactstrap';
+import {Container } from 'reactstrap';
     class Footer extends React.Component  {
     hotels=[];
 

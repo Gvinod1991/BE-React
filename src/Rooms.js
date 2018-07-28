@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+//import PropTypes from 'prop-types';
 import axios from 'axios';
-import {Container,Card, CardText, CardBody,
-    CardTitle, Button ,Modal, ModalHeader, ModalBody,ModalFooter   } from 'reactstrap';
+import {Card, CardText, CardBody,
+    CardTitle} from 'reactstrap';
     class Rooms extends React.Component  {
     rooms=[];
     constructor(props) {
@@ -11,13 +11,12 @@ import {Container,Card, CardText, CardBody,
         isOpen: false,
         rooms:[]
         };
-        console.log(props);
         this.getInventory(props.hotel_id,props.api_key,this);
         }
         getInventory(hotel_id,api_key,self)
         {
           axios.get(
-            'http://api.bookingjini.com/bookingEngine/get-inventory/'+api_key+'/'+hotel_id+'/2018-07-24/2018-07-25'
+            self.props.config.api_url+'bookingEngine/get-inventory/'+api_key+'/'+hotel_id+'/2018-07-28/2018-07-29'
             ).then(function(resp){
             const rooms = resp.data.data;
             self.setState({ rooms });
@@ -32,9 +31,9 @@ import {Container,Card, CardText, CardBody,
         return(
             <div>{
                 this.state.rooms.map((room,
-                  ROOM) => {
+                  index) => {
                 return(
-        <Card className="room">
+        <Card key={'room' + index} className="room">
           <CardBody>
             <CardTitle><div className="row"><p className="col-md-9">{room.room_type}</p>
             <button className="col-md-3 btn btn-info">Room Photo</button></div></CardTitle>
@@ -49,7 +48,7 @@ import {Container,Card, CardText, CardBody,
               </div>
             </div>
             <div className="clearfix"></div>
-            <CardText><div dangerouslySetInnerHTML={{__html: room.description}}></div></CardText>
+            <CardText dangerouslySetInnerHTML={{__html: room.description}}></CardText>
             <div className="row ">
               <div className="col-md-4">
                 ACCOMMODATION TYPE
@@ -61,9 +60,9 @@ import {Container,Card, CardText, CardBody,
                Amount
               </div>
             </div>
-            { room.rate_plans ? room.rate_plans.map((rate_plan) => {
+            { room.rate_plans ? room.rate_plans.map((rate_plan,index) => {
               return (
-                <div className="row ">
+                <div key={'mykey' + index} className="row ">
                 <div className="col-md-4">
                  {rate_plan.plan_name}
                 </div>
@@ -76,7 +75,7 @@ import {Container,Card, CardText, CardBody,
               </div>
               );
             })
-            :  <div>'Not Available'</div>}
+            :  <div >'Not Available'</div>}
           </CardBody>
         </Card>
        ) }
