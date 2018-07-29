@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import './css/component.css';
+import { Carousel } from 'react-responsive-carousel';
+import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 const defaultStyles = {
     modal: {
         position: 'fixed',
@@ -26,6 +28,7 @@ const defaultStyles = {
         opacity: 0.75,
         zIndex: 900
     }
+    
 };
 
 const propTypes = {
@@ -44,16 +47,16 @@ class JwModal extends React.Component {
         // open modal specified by id
         let modal = JwModal.modals.find(x => x.props.id === id);
         modal.setState({ isOpen: true });
-        document.body.classList.add('jw-modal-open');
+        //document.body.classList.add('jw-modal-open');
+        document.querySelector('.md-modal').classList.add('md-show');
     }
 
     static close = (id) => (e) => {
         e.preventDefault();
-
         // close modal specified by id
         let modal = JwModal.modals.find(x => x.props.id === id);
         modal.setState({ isOpen: false });
-        document.body.classList.remove('jw-modal-open');
+        document.querySelector('.md-modal').classList.remove('md-show');
     }
 
     //--- instance methods ---//
@@ -93,7 +96,7 @@ class JwModal extends React.Component {
 
     handleClick(e) {
         // close modal on background click
-        if (e.target.className === 'jw-modal') {
+        if (e.target.className === 'md-modal') {
             JwModal.close(this.props.id)(e);
         }
     }
@@ -101,12 +104,11 @@ class JwModal extends React.Component {
     render() {
         return (
             <div style={{display: + this.state.isOpen ? '' : 'none'}} onClick={this.handleClick} ref={el => this.element = el}>
-                <div className="jw-modal" style={this.styles.modal}>
-                    <div className="jw-modal-body" style={this.styles.body}>
+                <div className="md-modal md-effect-1">
+                <div className="md-content">
                         {this.props.children}
-                    </div>
                 </div>
-                <div className="jw-modal-background" style={this.styles.background}></div>
+                </div>
             </div>
         );
     }
